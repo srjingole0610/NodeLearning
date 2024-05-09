@@ -18,6 +18,8 @@ const fs = require("fs");
 //Used to read file in async mode. It takes following  arguments i.e. path, character encoding,  callback function with two arguments i.e. error and the data
 //If character encoding not present the output will have buffer
 const readFileAsync = fs.readFile("./txt/start.txt", "utf-8", (err, data1) => {
+  //Logging error
+  if (err) return console.log("ERROR");
   //print the output, this will run second
   console.log(data1);
   // another read file function
