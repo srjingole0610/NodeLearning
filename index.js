@@ -1,6 +1,7 @@
 //Imported  the fs module
 const fs = require("fs");
 const http = require("http");
+const url = require("url");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //FILES
@@ -50,13 +51,25 @@ const http = require("http");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//SERVER
+//SERVER AND ROUTING
 
 //method to create a server. It will take callback function with two args i.e. request and response
 const server = http.createServer((req, res) => {
-  console.log(req);
-  //Send the response
-  res.end("Hello from the server");
+  console.log(req.url);
+  const pathName = req.url;
+  if (pathName === "/" || pathName === "/overview") {
+    res.end("This is the OVERVIEW");
+  } else if (pathName === "/product") {
+    res.end("This is the PRODUCT");
+  } else {
+    //Adding the status Code and reponse headers
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "my-own-header": "hello-world",
+    });
+    //Send the response
+    res.end("<h1>Page Cannot be found</h1>");
+  }
 });
 
 //method to listen to the port. It will take two args i.e. port and callback function
